@@ -1,0 +1,17 @@
+{
+  "name": "34-grupe-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "server": "node . NODE_ENV=production",
+    "test": "node ./index.js NODE_ENV=test"
+  },
+  "keywords": [],
+  "author": "Rimantas",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
