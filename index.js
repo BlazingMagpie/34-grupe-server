@@ -1,10 +1,9 @@
-const config = require('./config.js');
 const server = require('./lib/server.js');
 
 const app = {};
 
 app.init = () => {
-    // pasiruosti pradinius folder'ius
+    // pasiruosti pradinius folder'ius:
 
     // pasiruosti pradinius failus
 
