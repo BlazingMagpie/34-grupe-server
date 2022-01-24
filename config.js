@@ -3,7 +3,7 @@ const environments = {};
 environments.dev = {
     name: 'Server',
     envName: 'dev',
-    httpPort: 3000,
+    httpPort: 3001,
     defaultLang: 'en',
     password: 'demo-password',
 }
