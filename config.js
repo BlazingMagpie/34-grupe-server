@@ -5,6 +5,12 @@ environments.dev = {
     envName: 'dev',
     httpPort: 3001,
     defaultLang: 'en',
+    cacheEnabled: false,
+    cacheTime: {
+        default: 10,
+        css: 100,
+        js: 100,
+    },
     password: 'demo-password',
 }
 
@@ -13,6 +19,12 @@ environments.production = {
     envName: 'production',
     httpPort: 4000,
     defaultLang: 'lt',
+    cacheEnabled: true,
+    cacheTime: {
+        default: 86400,
+        css: 86400,
+        js: 86400,
+    },
     password: 'fretr48t521e4rteye52',
 }
 
@@ -21,6 +33,12 @@ environments.test = {
     envName: 'test',
     httpPort: 5000,
     defaultLang: 'ee',
+    cacheEnabled: false,
+    cacheTime: {
+        default: 300,
+        css: 300,
+        js: 300,
+    },
     password: 'esttoo',
 }
 
