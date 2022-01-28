@@ -27,14 +27,14 @@ async function servicesSection() {
                         <p class="description">Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
                     </div>
                     <div class="service">
-                        <i class="icon fa fa-globe"></i>
-                        <h3>Direct Response Content</h3>
-                        <p>Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
+                        <i class="icon fa fa-plane"></i>
+                        <h3 class="title">Direct Response Content</h3>
+                        <p class="description">Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
                     </div>
                     <div class="service">
-                        <i class="icon fa fa-globe"></i>
-                        <h3>CRO and Retention Optimizations</h3>
-                        <p>Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
+                        <i class="icon fa fa-bath"></i>
+                        <h3 class="title">CRO and Retention Optimizations</h3>
+                        <p class="description">Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
                     </div>
                 </div>
             </section>`;
