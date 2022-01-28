@@ -9,8 +9,8 @@ class PageHome extends PageTemplate {
         this.isHomePage = true;
     }
 
-    mainHTML() {
-        return heroSection() + servicesSection() + contactsSection();
+    async mainHTML() {
+        return heroSection() + await servicesSection() + contactsSection();
     }
 }
 

@@ -1,11 +1,15 @@
+const file = require("../lib/file.js");
 const folder = require("../lib/folder.js");
 
 async function servicesSection() {
     // perskaitome kokie failai yra: /data/services folderyje
-    const files = await folder.read('data/services');
-    console.log(files);
-
+    const filesList = await folder.read('data/services');
     // gauname sarasa paslaugu JSON failu
+    for (const fileName of filesList) {
+        const fileContent = await file.read('data/services', fileName);
+        console.log(fileName);
+        console.log(fileContent);
+    }
     // visus JSON failus issiparsinti, t.y. konvertuoti i normalu JS objekta
     // atfiltruoti ir pasilikti tik validzias ir aktyvias paslaugas, t.y. ju objektus
     // su ciklu sukonstruoti galutini paslaugu HTML
