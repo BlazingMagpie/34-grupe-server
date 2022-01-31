@@ -4,6 +4,7 @@ class PageRegister extends PageTemplate {
     constructor() {
         super();
         this.pageCSSfileName = 'auth';
+        this.pageJSfileName = 'auth';
     }
 
     mainHTML() {
