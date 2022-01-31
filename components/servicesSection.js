@@ -7,7 +7,8 @@ async function servicesSection() {
         if (typeof service !== 'object'
             || service === null
             || Array.isArray(service)
-            || Object.keys(service).length !== 3
+            || Object.keys(service).length !== 4
+            || typeof service.isActive !== 'boolean'
             || !service.icon
             || typeof service.icon !== 'string'
             || service.icon.length > 20
@@ -22,47 +23,39 @@ async function servicesSection() {
         return true;
     }
 
-    const services = [];
     // perskaitome kokie failai yra: /data/services folderyje
-    const filesList = await folder.read('data/services');
     // gauname sarasa paslaugu JSON failu
-    for (const fileName of filesList) {
-        if (utils.fileExtension(fileName) === 'json') {
-            const fileContent = await file.read('data/services', fileName);
-            // visus JSON failus issiparsinti, t.y. konvertuoti i normalu JS objekta
-            const obj = utils.parseJSONtoObject(fileContent);
-            // atfiltruoti ir pasilikti tik validzias ir aktyvias paslaugas, t.y. ju objektus
-            if (obj && isValid(obj)) {
-                services.push(obj);
-            }
-        }
-    }
-    console.log(services);
+    // visus JSON failus issiparsinti, t.y. konvertuoti i normalu JS objekta
+    // atfiltruoti ir pasilikti tik validzias ir aktyvias paslaugas, t.y. ju objektus
     // su ciklu sukonstruoti galutini paslaugu HTML
     // ta HTML istatyti i reikiama vieta return string'e
+
+    let servicesHTML = '';
+    const filesList = await folder.read('data/services');
+    for (const fileName of filesList) {
+        if (utils.fileExtension(fileName) !== 'json') {
+            continue;
+        }
+
+        const fileContent = await file.read('data/services', fileName);
+        const obj = utils.parseJSONtoObject(fileContent);
+        if (!obj || !isValid(obj) || !obj.isActive) {
+            continue;
+        }
+
+        servicesHTML += `<div class="service">
+                            <i class="icon fa fa-${obj.icon}"></i>
+                            <h3 class="title">${obj.title}</h3>
+                            <p class="description">${obj.description}</p>
+                        </div>`;
+    }
 
     return `<section class="container bg-gradient services">
                 <div class="row">
                     <h2>Services</h2>
                     <p>Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back into the development of the asset through its charitable foundation.</p>
                 </div>
-                <div class="row services-list">
-                    <div class="service">
-                        <i class="icon fa fa-globe"></i>
-                        <h3 class="title">Paid Search and Social Management</h3>
-                        <p class="description">Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
-                    </div>
-                    <div class="service">
-                        <i class="icon fa fa-plane"></i>
-                        <h3 class="title">Direct Response Content</h3>
-                        <p class="description">Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
-                    </div>
-                    <div class="service">
-                        <i class="icon fa fa-bath"></i>
-                        <h3 class="title">CRO and Retention Optimizations</h3>
-                        <p class="description">Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
-                    </div>
-                </div>
+                <div class="row services-list">${servicesHTML}</div>
             </section>`;
 }
 
