@@ -1,17 +1,43 @@
 const file = require("../lib/file.js");
 const folder = require("../lib/folder.js");
+const utils = require("../lib/utils.js");
 
 async function servicesSection() {
+    function isValid(service) {
+        if (typeof service !== 'object'
+            || service === null
+            || Array.isArray(service)
+            || Object.keys(service).length !== 3
+            || !service.icon
+            || typeof service.icon !== 'string'
+            || service.icon.length > 20
+            || !service.title
+            || typeof service.title !== 'string'
+            || service.title.length > 40
+            || !service.description
+            || typeof service.description !== 'string'
+            || service.description.length > 200) {
+            return false;
+        }
+        return true;
+    }
+
+    const services = [];
     // perskaitome kokie failai yra: /data/services folderyje
     const filesList = await folder.read('data/services');
     // gauname sarasa paslaugu JSON failu
     for (const fileName of filesList) {
-        const fileContent = await file.read('data/services', fileName);
-        console.log(fileName);
-        console.log(fileContent);
+        if (utils.fileExtension(fileName) === 'json') {
+            const fileContent = await file.read('data/services', fileName);
+            // visus JSON failus issiparsinti, t.y. konvertuoti i normalu JS objekta
+            const obj = utils.parseJSONtoObject(fileContent);
+            // atfiltruoti ir pasilikti tik validzias ir aktyvias paslaugas, t.y. ju objektus
+            if (obj && isValid(obj)) {
+                services.push(obj);
+            }
+        }
     }
-    // visus JSON failus issiparsinti, t.y. konvertuoti i normalu JS objekta
-    // atfiltruoti ir pasilikti tik validzias ir aktyvias paslaugas, t.y. ju objektus
+    console.log(services);
     // su ciklu sukonstruoti galutini paslaugu HTML
     // ta HTML istatyti i reikiama vieta return string'e
 
