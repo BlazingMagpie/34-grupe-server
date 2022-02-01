@@ -13,21 +13,22 @@ class PageRegister extends PageTemplate {
                         <div class="left">
                             <h1>Register</h1>
                             <form class="form">
+                                <div class="form-errors"></div>
                                 <div class="form-row">
                                     <label for="username">Username</label>
-                                    <input id="username" type="text" placeholder="Type username" required>
+                                    <input id="username" data-validation="username" type="text" placeholder="Type username" required value="Chuck">
                                 </div>
                                 <div class="form-row">
                                     <label for="email">Email</label>
-                                    <input id="email" type="email" placeholder="Type email" required>
+                                    <input id="email" data-validation="email" type="email" placeholder="Type email" required value="chuck@norris.com">
                                 </div>
                                 <div class="form-row">
                                     <label for="pass">Password</label>
-                                    <input id="pass" type="password" placeholder="Type password" required>
+                                    <input id="pass" data-validation="password" type="password" placeholder="Type password" required value="chuckchuckchuck">
                                 </div>
                                 <div class="form-row">
                                     <label for="repass">Repeat password</label>
-                                    <input id="repass" type="password" placeholder="Type password" required>
+                                    <input id="repass" data-validation="password" type="password" placeholder="Type password" required value="chuckchuckchuck2">
                                 </div>
                                 <div class="form-row">
                                     <button type="submit" class="btn">Create account</button>
