@@ -49,7 +49,7 @@ submitDOM.addEventListener('click', (e) => {
         // tikriname konkrecios formos reiksmes teisinguma
         const valueState = validationFunction(value) // true; 'Error message'
 
-        if (valueState !== true) {
+        if (valueState !== true && !errors.includes(valueState)) {
             errors.push(valueState);
         }
 
