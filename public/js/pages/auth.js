@@ -1,40 +1,9 @@
+import { IsValid } from "../components/IsValid.js";
+
 const formDOM = document.querySelector('.form');
 const errorsDOM = formDOM.querySelector('.form-errors');
 const allInputsDOM = formDOM.querySelectorAll('input');
 const submitDOM = formDOM.querySelector('button');
-
-const minUsernameLength = 4;
-const maxUsernameLength = 20;
-const minPasswordLength = 12;
-const validation = {};
-
-validation.username = (text) => {
-    text = text.trim();
-    if (text.length < minUsernameLength) {
-        return 'Per trumpas slapyvardis';
-    }
-    if (text.length > maxUsernameLength) {
-        return 'Per ilgas slapyvardis';
-    }
-    const allowedSymbols = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_';
-    for (const t of text) {
-        if (!allowedSymbols.includes(t)) {
-            return `Slapyvardyje yra neleistinas simbolis (${t})`;
-        }
-    }
-    return true;
-}
-
-validation.email = (text) => {
-    return true;
-}
-
-validation.password = (text) => {
-    if (text.length < minPasswordLength) {
-        return 'Per trumpas slaptazodis';
-    }
-    return true;
-}
 
 submitDOM.addEventListener('click', (e) => {
     e.preventDefault();
@@ -43,11 +12,21 @@ submitDOM.addEventListener('click', (e) => {
     const passwordValues = [];
     for (const inputDOM of allInputsDOM) {
         const { value, dataset } = inputDOM;
+
         const validationRule = dataset.validation;
-        const validationFunction = validation[validationRule];
+        if (!validationRule) {
+            console.error('ERROR: input turi tureti "data-validation" attribute');
+            continue;
+        }
+
+        const validationFunction = IsValid[validationRule];
+        if (typeof validationFunction !== 'function') {
+            console.error('ERROR: nenumatyta validavimo funkcija', validationRule);
+            continue;
+        }
 
         // tikriname konkrecios formos reiksmes teisinguma
-        const valueState = validationFunction(value) // true; 'Error message'
+        const valueState = validationFunction(value); // true | 'Error message'
 
         if (valueState !== true && !errors.includes(valueState)) {
             errors.push(valueState);
