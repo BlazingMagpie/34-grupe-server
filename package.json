@@ -7,12 +7,13 @@
   "scripts": {
     "dev": "nodemon",
     "server": "NODE_ENV=production node .",
-    "test": "NODE_ENV=test node ./index.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config ./jest.config.js --watchAll --passWithNoTests"
   },
   "keywords": [],
   "author": "Rimantas",
   "license": "MIT",
   "devDependencies": {
+    "jest": "^27.5.0",
     "nodemon": "^2.0.15"
   }
 }
