@@ -1,4 +1,4 @@
-const PageTemplate = require("../lib/Page.js");
+import { PageTemplate } from "../lib/Page.js";
 
 class PageBlog extends PageTemplate {
     constructor() {
@@ -121,4 +121,4 @@ class PageBlog extends PageTemplate {
     }
 }
 
-module.exports = PageBlog;
+export { PageBlog };

@@ -51,4 +51,4 @@ environments.test = {
 const currectEnv = typeof process.env.NODE_ENV === 'string' ? process.env.NODE_ENV : '';
 const exportableEnvName = typeof environments[currectEnv] === 'object' ? currectEnv : 'dev';
 
-module.exports = environments[exportableEnvName];
+export default environments[exportableEnvName];

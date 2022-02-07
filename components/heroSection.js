@@ -13,4 +13,4 @@ function heroSection() {
             </section>`;
 }
 
-module.exports = heroSection;
+export { heroSection };

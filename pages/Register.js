@@ -1,4 +1,4 @@
-const PageTemplate = require("../lib/Page.js");
+import { PageTemplate } from "../lib/Page.js";
 
 class PageRegister extends PageTemplate {
     constructor() {
@@ -43,4 +43,4 @@ class PageRegister extends PageTemplate {
     }
 }
 
-module.exports = PageRegister;
+export { PageRegister };
