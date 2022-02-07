@@ -1,6 +1,6 @@
-const file = require("../lib/file.js");
-const folder = require("../lib/folder.js");
-const utils = require("../lib/utils.js");
+import { file } from "../lib/file.js";
+import { folder } from "../lib/folder.js";
+import { utils } from "../lib/utils.js";
 
 async function servicesSection() {
     function isValid(service) {
@@ -59,4 +59,4 @@ async function servicesSection() {
             </section>`;
 }
 
-module.exports = servicesSection;
+export { servicesSection };

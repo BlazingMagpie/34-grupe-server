@@ -31,4 +31,4 @@ function contactsSection() {
             </section>`;
 }
 
-module.exports = contactsSection;
+export { contactsSection };

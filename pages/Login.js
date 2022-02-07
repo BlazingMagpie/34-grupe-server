@@ -1,9 +1,10 @@
-const PageTemplate = require("../lib/Page.js");
+import { PageTemplate } from "../lib/Page.js";
 
 class PageLogin extends PageTemplate {
     constructor() {
         super();
         this.pageCSSfileName = 'auth';
+        this.pageJSfileName = 'auth';
     }
 
     mainHTML() {
@@ -12,13 +13,14 @@ class PageLogin extends PageTemplate {
                         <div class="left">
                             <h1>Login</h1>
                             <form class="form">
+                                <div class="form-errors"></div>
                                 <div class="form-row">
                                     <label for="username">Username</label>
-                                    <input id="username" type="text" placeholder="Type username" required>
+                                    <input id="username" data-validation="username" type="text" placeholder="Type username" required>
                                 </div>
                                 <div class="form-row">
                                     <label for="pass">Password</label>
-                                    <input id="pass" type="password" placeholder="Type password" required>
+                                    <input id="pass" data-validation="password" type="password" placeholder="Type password" required>
                                 </div>
                                 <div class="form-row">
                                     <button type="submit" class="btn">Log in</button>
@@ -33,4 +35,4 @@ class PageLogin extends PageTemplate {
     }
 }
 
-module.exports = PageLogin;
+export { PageLogin };
