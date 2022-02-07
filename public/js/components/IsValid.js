@@ -3,6 +3,9 @@ class IsValid {
         const minUsernameLength = 4;
         const maxUsernameLength = 20;
 
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
         text = text.trim();
 
         if (text === '') {
@@ -24,11 +27,17 @@ class IsValid {
     }
 
     static email(text) {
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
         return true;
     }
 
     static password(text) {
         const minPasswordLength = 12;
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
 
         if (text === '') {
             return 'Pamirsai irasyti slaptazodi';
