@@ -7,34 +7,37 @@ class PageBlog extends PageTemplate {
     }
 
     getBlogPostsData() {
-        return [{}, {}, {}];
+        return [];
     }
 
     emptyBlogHTML() {
         return '<div class="row empty-list">Seems like the blog is empty. Come back later, please! 💖</div>';
     }
 
+    isValidPost(post) {
+        return true;
+    }
+
+    blogPostHTML(post) {
+        return `<article class="post">
+                    <img src="/img/blog.jpg" alt="Blog image" class="post-img">
+                    <h2 class="post-title">Blog post title</h2>
+                    <p class="post-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, deleniti...</p>
+                    <a href="./good-morning/" class="read-more">Read more<i class="icon fa fa-angle-right"></i></a>
+                </article>`;
+    }
+
     blogListHTML(list) {
-        return `<div class="row list">
-                    <article class="post">
-                        <img src="/img/blog.jpg" alt="Blog image" class="post-img">
-                        <h2 class="post-title">Blog post title</h2>
-                        <p class="post-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, deleniti...</p>
-                        <a href="./good-morning/" class="read-more">Read more<i class="icon fa fa-angle-right"></i></a>
-                    </article>
-                    <article class="post">
-                        <img src="/img/blog.jpg" alt="Blog image" class="post-img">
-                        <h2 class="post-title">Blog post title</h2>
-                        <p class="post-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, deleniti...</p>
-                        <a href="./good-morning/" class="read-more">Read more<i class="icon fa fa-angle-right"></i></a>
-                    </article>
-                    <article class="post">
-                        <img src="/img/blog.jpg" alt="Blog image" class="post-img">
-                        <h2 class="post-title">Blog post title</h2>
-                        <p class="post-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, deleniti...</p>
-                        <a href="./good-morning/" class="read-more">Read more<i class="icon fa fa-angle-right"></i></a>
-                    </article>
-                </div>`;
+        let HTML = '';
+
+        for (const item of list) {
+            if (!this.isValidPost(item)) {
+                continue;
+            }
+            HTML += this.blogPostHTML(item);
+        }
+
+        return `<div class="row list">${HTML}</div>`;
     }
 
     mainHTML() {
