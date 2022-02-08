@@ -1,3 +1,0 @@
-const APIservices = {};
-
-export { APIservices }
