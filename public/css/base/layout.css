@@ -1,6 +1,12 @@
 body,
 main {
     display: grid;
+    align-items: start;
+}
+main {
+    --header-height: 60px;
+    --footer-height: 99px;
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
 }
 
 .container {
