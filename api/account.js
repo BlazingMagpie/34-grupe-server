@@ -27,9 +27,13 @@ handler._account.post = (data, callback) => {
         });
     }
 
-    console.log(userObj);
+    // atejusio objekto validacija:
+    // - ar teisingas/validus vardas?
+    // - ar teisingas/validus email?
+    // - ar teisingas/validus password?
 
-    // sukuriam
+    // sukuriam vartotoja
+
     return callback(200, {
         status: 'success',
         msg: 'Paskyra sukurta'
