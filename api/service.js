@@ -7,29 +7,44 @@ handler.service = (data, callback) => {
         return handler._service[data.httpMethod](data, callback);
     }
 
-    return false;
+    return callback(404, {
+        status: 'error',
+        msg: 'Tavo norimas HTTPmethod yra nepalaikomas'
+    });
 }
 
 handler._service = {};
 
 handler._service.get = (data, callback) => {
     // gaunam
-    return 'service get';
+    return callback(200, {
+        status: 'success',
+        msg: 'Paslaugos info'
+    });
 }
 
 handler._service.post = (data, callback) => {
     // sukuriam
-    return 'service post';
+    return callback(200, {
+        status: 'success',
+        msg: 'Paslauga sukurta'
+    });
 }
 
 handler._service.put = (data, callback) => {
     // atnaujinam
-    return 'service put';
+    return callback(200, {
+        status: 'success',
+        msg: 'Paslauga atnaujinta'
+    });
 }
 
 handler._service.delete = (data, callback) => {
     // istrinam
-    return 'service delete';
+    return callback(200, {
+        status: 'success',
+        msg: 'Paslauga istrinta'
+    });
 }
 
 export default handler;
