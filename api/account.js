@@ -1,3 +1,5 @@
+import { utils } from "../lib/utils.js";
+
 const handler = {};
 
 handler.account = (data, callback) => {
@@ -16,6 +18,17 @@ handler.account = (data, callback) => {
 handler._account = {};
 
 handler._account.post = (data, callback) => {
+    const userObj = utils.parseJSONtoObject(data.payload);
+
+    if (!userObj) {
+        return callback(400, {
+            status: 'error',
+            msg: 'Nevalidus JSON objektas'
+        });
+    }
+
+    console.log(userObj);
+
     // sukuriam
     return callback(200, {
         status: 'success',
