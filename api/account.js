@@ -18,7 +18,7 @@ handler.account = (data, callback) => {
 handler._account = {};
 
 handler._account.post = (data, callback) => {
-    const userObj = utils.parseJSONtoObject(data.payload);
+    const userObj = data.payload;
 
     if (!userObj) {
         return callback(400, {
