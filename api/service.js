@@ -15,19 +15,19 @@ handler.service = (data, callback) => {
 
 handler._service = {};
 
-handler._service.get = (data, callback) => {
-    // gaunam
-    return callback(200, {
-        status: 'success',
-        msg: 'Paslaugos info'
-    });
-}
-
 handler._service.post = (data, callback) => {
     // sukuriam
     return callback(200, {
         status: 'success',
         msg: 'Paslauga sukurta'
+    });
+}
+
+handler._service.get = (data, callback) => {
+    // gaunam
+    return callback(200, {
+        status: 'success',
+        msg: 'Paslaugos info'
     });
 }
 
