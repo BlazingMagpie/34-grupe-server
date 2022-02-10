@@ -3,11 +3,11 @@ import { IsValid } from "../lib/IsValid.js";
 
 const handler = {};
 
-handler.account = (data, callback) => {
+handler.account = async (data, callback) => {
     const acceptableMethods = ['get', 'post', 'put', 'delete'];
 
     if (acceptableMethods.includes(data.httpMethod)) {
-        return handler._account[data.httpMethod](data, callback);
+        return await handler._account[data.httpMethod](data, callback);
     }
 
     return callback(404, {
@@ -18,7 +18,7 @@ handler.account = (data, callback) => {
 
 handler._account = {};
 
-handler._account.post = (data, callback) => {
+handler._account.post = async (data, callback) => {
     const userObj = data.payload;
 
     if (!userObj) {
@@ -54,7 +54,13 @@ handler._account.post = (data, callback) => {
 
     // sukuriam vartotoja
     // sukuriamas failas: /data/users/[email].json
-    file.create('/data/users', `[email].json`, userObj);
+    const creationStatus = await file.create('/data/users', userObj.email + '.json', userObj);
+    if (creationStatus !== true) {
+        return callback(500, {
+            status: 'error',
+            msg: creationStatus
+        });
+    }
 
     return callback(200, {
         status: 'success',
