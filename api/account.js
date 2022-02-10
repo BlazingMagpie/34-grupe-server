@@ -1,3 +1,4 @@
+import { file } from "../lib/file.js";
 import { IsValid } from "../lib/IsValid.js";
 
 const handler = {};
@@ -27,8 +28,6 @@ handler._account.post = (data, callback) => {
         });
     }
 
-    // atejusio objekto validacija:
-    // - ar teisingas/validus vardas?
     const [usernameError, usernameMsg] = IsValid.username(userObj.username);
     if (usernameError) {
         return callback(400, {
@@ -36,10 +35,26 @@ handler._account.post = (data, callback) => {
             msg: usernameMsg
         });
     }
-    // - ar teisingas/validus email?
-    // - ar teisingas/validus password?
+
+    const [emailError, emailMsg] = IsValid.email(userObj.email);
+    if (emailError) {
+        return callback(400, {
+            status: 'error',
+            msg: emailMsg
+        });
+    }
+
+    const [passwordError, passwordMsg] = IsValid.password(userObj.password);
+    if (passwordError) {
+        return callback(400, {
+            status: 'error',
+            msg: passwordMsg
+        });
+    }
 
     // sukuriam vartotoja
+    // sukuriamas failas: /data/users/[email].json
+    file.create('/data/users', `[email].json`, userObj);
 
     return callback(200, {
         status: 'success',
