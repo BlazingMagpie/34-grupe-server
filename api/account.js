@@ -29,10 +29,11 @@ handler._account.post = (data, callback) => {
 
     // atejusio objekto validacija:
     // - ar teisingas/validus vardas?
-    if (IsValid.username(userObj.username) !== true) {
+    const [usernameError, usernameMsg] = IsValid.username(userObj.username);
+    if (usernameError) {
         return callback(400, {
             status: 'error',
-            msg: 'Neteisingas vartotojo username, arba jis nenurodytas'
+            msg: usernameMsg
         });
     }
     // - ar teisingas/validus email?
