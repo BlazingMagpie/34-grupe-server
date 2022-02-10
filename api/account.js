@@ -1,4 +1,4 @@
-import { utils } from "../lib/utils.js";
+import { IsValid } from "../lib/IsValid.js";
 
 const handler = {};
 
@@ -29,6 +29,12 @@ handler._account.post = (data, callback) => {
 
     // atejusio objekto validacija:
     // - ar teisingas/validus vardas?
+    if (IsValid.username(userObj.username) !== true) {
+        return callback(400, {
+            status: 'error',
+            msg: 'Neteisingas vartotojo username, arba jis nenurodytas'
+        });
+    }
     // - ar teisingas/validus email?
     // - ar teisingas/validus password?
 
