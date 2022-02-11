@@ -21,6 +21,7 @@ handler._account = {};
 
 handler._account.post = async (data, callback) => {
     const userObj = data.payload;
+    console.log(userObj);
 
     if (!userObj) {
         return callback(400, {

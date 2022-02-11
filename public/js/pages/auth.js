@@ -48,6 +48,12 @@ submitDOM.addEventListener('click', (e) => {
         }
     }
 
+    const formData = {
+        username: allInputsDOM[0].value,
+        email: allInputsDOM[1].value,
+        password: allInputsDOM[2].value,
+    }
+
     // jei rado klaidu, jas atvaizduoja
     if (errors.length) {
         errorsDOM.innerText = errors.map(s => s + '.').join('\n');
@@ -57,11 +63,16 @@ submitDOM.addEventListener('click', (e) => {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4) {
-                console.log(this.responseText);
+                try {
+                    const obj = JSON.parse(this.responseText);
+                    errorsDOM.innerText = obj.msg;
+                } catch (error) {
+                    errorsDOM.innerText = 'Is serverio atejo blogai suformatuota zinute';
+                }
             }
         };
         xhttp.open("POST", "/api/account", true);
-        xhttp.send();
+        xhttp.send(JSON.stringify(formData));
     }
 
     // siusti duomenis
