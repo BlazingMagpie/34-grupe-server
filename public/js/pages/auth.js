@@ -50,11 +50,18 @@ submitDOM.addEventListener('click', (e) => {
 
     // jei rado klaidu, jas atvaizduoja
     if (errors.length) {
-        console.log('ISSITAISYK KLAIDAS, PLEASE...');
         errorsDOM.innerText = errors.map(s => s + '.').join('\n');
     } else {
-        console.log('GOOD TO GO - galim siusti info...');
         errorsDOM.innerText = '';
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                console.log(this.responseText);
+            }
+        };
+        xhttp.open("POST", "/api/account", true);
+        xhttp.send();
     }
 
     // siusti duomenis
