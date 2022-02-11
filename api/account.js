@@ -1,5 +1,6 @@
 import { file } from "../lib/file.js";
 import { IsValid } from "../lib/IsValid.js";
+import { utils } from "../lib/utils.js";
 
 const handler = {};
 
@@ -54,6 +55,7 @@ handler._account.post = async (data, callback) => {
 
     // sukuriam vartotoja
     // sukuriamas failas: /data/users/[email].json
+    userObj.password = utils.hash(userObj.password);
     const creationStatus = await file.create('/data/users', userObj.email + '.json', userObj);
     if (creationStatus !== true) {
         return callback(500, {

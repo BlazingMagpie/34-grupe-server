@@ -12,6 +12,7 @@ environments.dev = {
         js: 100,
     },
     password: 'demo-password',
+    hashingSecret: '847jh5ge2r54yj152ty8y4',
 }
 
 environments.production = {
@@ -26,6 +27,7 @@ environments.production = {
         js: 86400,
     },
     password: 'fretr48t521e4rteye52',
+    hashingSecret: '5r4ku1y52h4115847ry15284f',
 }
 
 environments.test = {
@@ -40,6 +42,7 @@ environments.test = {
         js: 300,
     },
     password: 'esttoo',
+    hashingSecret: 'u4k1hg5284yjFh51847ey15gy',
 }
 
 // NODE_ENV=production node . -> environments.production
