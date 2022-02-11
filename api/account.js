@@ -57,6 +57,17 @@ handler._account.post = async (data, callback) => {
     // sukuriam vartotoja
     // sukuriamas failas: /data/users/[email].json
     userObj.password = utils.hash(userObj.password);
+
+    // patikrinti, ar vartotojas dar nera uzregistruotas
+    const alreadyRegistered = false;
+    if (alreadyRegistered) {
+        return callback(400, {
+            status: 'error',
+            msg: 'Paskyra su tokiu el. pastu jau uzregistruota'
+        });
+    }
+
+    // jei dar nebuvo uzregistruotas - registruojame
     const creationStatus = await file.create('/data/users', userObj.email + '.json', userObj);
     if (creationStatus !== true) {
         return callback(500, {
