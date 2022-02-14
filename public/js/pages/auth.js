@@ -10,8 +10,10 @@ submitDOM.addEventListener('click', (e) => {
     // formos validacija - pirmine reiksmiu patikra
     const errors = [];
     const passwordValues = [];
+    const formData = {}
     for (const inputDOM of allInputsDOM) {
-        const { value, dataset } = inputDOM;
+        const { id, value, dataset } = inputDOM;
+        formData[id] = value;
 
         const validationRule = dataset.validation;
         if (!validationRule) {
@@ -48,12 +50,6 @@ submitDOM.addEventListener('click', (e) => {
         }
     }
 
-    const formData = {
-        username: allInputsDOM[0].value,
-        email: allInputsDOM[1].value,
-        password: allInputsDOM[2].value,
-    }
-
     // jei rado klaidu, jas atvaizduoja
     if (errors.length) {
         errorsDOM.innerText = errors.map(s => s + '.').join('\n');
@@ -71,7 +67,7 @@ submitDOM.addEventListener('click', (e) => {
                 }
             }
         };
-        xhttp.open("POST", "/api/account", true);
+        xhttp.open("POST", formDOM.action, true);
         xhttp.send(JSON.stringify(formData));
     }
 

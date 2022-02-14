@@ -12,7 +12,7 @@ class PageRegister extends PageTemplate {
                     <div class="row">
                         <div class="left">
                             <h1>Register</h1>
-                            <form class="form">
+                            <form class="form" action="/api/account">
                                 <div class="form-errors"></div>
                                 <div class="form-row">
                                     <label for="username">Username</label>

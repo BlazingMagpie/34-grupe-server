@@ -12,11 +12,11 @@ class PageLogin extends PageTemplate {
                     <div class="row">
                         <div class="left">
                             <h1>Login</h1>
-                            <form class="form">
+                            <form class="form" action="/api/token">
                                 <div class="form-errors"></div>
                                 <div class="form-row">
-                                    <label for="username">Username</label>
-                                    <input id="username" data-validation="username" type="text" placeholder="Type username" required>
+                                    <label for="email">Email</label>
+                                    <input id="email" data-validation="email" type="text" placeholder="Type email" required>
                                 </div>
                                 <div class="form-row">
                                     <label for="pass">Password</label>
