@@ -51,7 +51,6 @@ handler._token.post = async (data, callback) => {
 
     const userData = {
         email: userObj.email,
-        password: userObj.pass,
     }
 
     const creationStatus = await file.create('/data/tokens', userObj.email + '.json', userData);
