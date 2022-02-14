@@ -21,7 +21,6 @@ handler._account = {};
 
 handler._account.post = async (data, callback) => {
     const userObj = data.payload;
-    console.log(userObj);
 
     if (!userObj) {
         return callback(400, {
@@ -54,11 +53,8 @@ handler._account.post = async (data, callback) => {
         });
     }
 
-    // sukuriam vartotoja
-    // sukuriamas failas: /data/users/[email].json
     userObj.pass = utils.hash(userObj.pass);
 
-    // patikrinti, ar vartotojas dar nera uzregistruotas
     const alreadyRegistered = false;
     if (alreadyRegistered) {
         return callback(400, {
@@ -67,8 +63,13 @@ handler._account.post = async (data, callback) => {
         });
     }
 
-    // jei dar nebuvo uzregistruotas - registruojame
-    const creationStatus = await file.create('/data/users', userObj.email + '.json', userObj);
+    const userData = {
+        username: userObj.username,
+        email: userObj.email,
+        password: userObj.pass,
+    }
+
+    const creationStatus = await file.create('/data/users', userObj.email + '.json', userData);
     if (creationStatus !== true) {
         return callback(500, {
             status: 'error',

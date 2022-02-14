@@ -49,7 +49,12 @@ handler._token.post = async (data, callback) => {
     // sukuriamas failas: /data/users/[email].json
     userObj.pass = utils.hash(userObj.pass);
 
-    const creationStatus = await file.create('/data/tokens', userObj.email + '.json', userObj);
+    const userData = {
+        email: userObj.email,
+        password: userObj.pass,
+    }
+
+    const creationStatus = await file.create('/data/tokens', userObj.email + '.json', userData);
     if (creationStatus !== true) {
         return callback(500, {
             status: 'error',
