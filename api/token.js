@@ -4,11 +4,11 @@ import { utils } from "../lib/utils.js";
 
 const handler = {};
 
-handler.account = async (data, callback) => {
+handler.token = async (data, callback) => {
     const acceptableMethods = ['get', 'post', 'put', 'delete'];
 
     if (acceptableMethods.includes(data.httpMethod)) {
-        return await handler._account[data.httpMethod](data, callback);
+        return await handler._token[data.httpMethod](data, callback);
     }
 
     return callback(404, {
@@ -17,24 +17,15 @@ handler.account = async (data, callback) => {
     });
 }
 
-handler._account = {};
+handler._token = {};
 
-handler._account.post = async (data, callback) => {
+handler._token.post = async (data, callback) => {
     const userObj = data.payload;
-    console.log(userObj);
 
     if (!userObj) {
         return callback(400, {
             status: 'error',
             msg: 'Nevalidus JSON objektas'
-        });
-    }
-
-    const [usernameError, usernameMsg] = IsValid.username(userObj.username);
-    if (usernameError) {
-        return callback(400, {
-            status: 'error',
-            msg: usernameMsg
         });
     }
 
@@ -54,21 +45,11 @@ handler._account.post = async (data, callback) => {
         });
     }
 
-    // sukuriam vartotoja
+    // sukuriam sesija
     // sukuriamas failas: /data/users/[email].json
     userObj.pass = utils.hash(userObj.pass);
 
-    // patikrinti, ar vartotojas dar nera uzregistruotas
-    const alreadyRegistered = false;
-    if (alreadyRegistered) {
-        return callback(400, {
-            status: 'error',
-            msg: 'Paskyra su tokiu el. pastu jau uzregistruota'
-        });
-    }
-
-    // jei dar nebuvo uzregistruotas - registruojame
-    const creationStatus = await file.create('/data/users', userObj.email + '.json', userObj);
+    const creationStatus = await file.create('/data/tokens', userObj.email + '.json', userObj);
     if (creationStatus !== true) {
         return callback(500, {
             status: 'error',
@@ -78,31 +59,31 @@ handler._account.post = async (data, callback) => {
 
     return callback(200, {
         status: 'success',
-        msg: 'Paskyra sukurta'
+        msg: 'Sesija sukurta'
     });
 }
 
-handler._account.get = (data, callback) => {
+handler._token.get = (data, callback) => {
     // gaunam
     return callback(200, {
         status: 'success',
-        msg: 'Paskyros info'
+        msg: 'Sesijos info'
     });
 }
 
-handler._account.put = (data, callback) => {
+handler._token.put = (data, callback) => {
     // atnaujinam
     return callback(200, {
         status: 'success',
-        msg: 'Paskyra atnaujinta'
+        msg: 'Sesija atnaujinta'
     });
 }
 
-handler._account.delete = (data, callback) => {
+handler._token.delete = (data, callback) => {
     // istrinam
     return callback(200, {
         status: 'success',
-        msg: 'Paskyra istrinta'
+        msg: 'Sesija istrinta'
     });
 }
 
