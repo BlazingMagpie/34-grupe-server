@@ -45,15 +45,24 @@ handler._token.post = async (data, callback) => {
         });
     }
 
-    // sukuriam sesija
-    // sukuriamas failas: /data/users/[email].json
+    const savedUserData = await file.read('/data/users', userObj.email + '.json');
+    if (!savedUserData) {
+        return callback(400, {
+            status: 'error',
+            msg: 'Invalid email and password match'
+        });
+    }
+
     userObj.pass = utils.hash(userObj.pass);
 
     const userData = {
         email: userObj.email,
+        expire: Date.now() + 7 * 86400000
     }
 
-    const creationStatus = await file.create('/data/tokens', userObj.email + '.json', userData);
+    const token = utils.randomString(20);
+
+    const creationStatus = await file.create('/data/tokens', token + '.json', userData);
     if (creationStatus !== true) {
         return callback(500, {
             status: 'error',
