@@ -45,15 +45,29 @@ handler._token.post = async (data, callback) => {
         });
     }
 
-    const savedUserData = await file.read('/data/users', userObj.email + '.json');
-    if (!savedUserData) {
+    const savedUserDataJSON = await file.read('/data/users', userObj.email + '.json');
+    if (!savedUserDataJSON) {
         return callback(400, {
             status: 'error',
             msg: 'Invalid email and password match'
         });
     }
 
+    const savedUserData = utils.parseJSONtoObject(savedUserDataJSON);
+    if (!savedUserData) {
+        return callback(500, {
+            status: 'error',
+            msg: 'Internat server error while trying to get user information'
+        });
+    }
+
     userObj.pass = utils.hash(userObj.pass);
+    if (userObj.pass !== savedUserData.pass) {
+        return callback(400, {
+            status: 'error',
+            msg: 'Invalid email and password match'
+        });
+    }
 
     const userData = {
         email: userObj.email,
@@ -70,9 +84,22 @@ handler._token.post = async (data, callback) => {
         });
     }
 
+    const cookies = [
+        'login-token=' + token,
+        'path=/',
+        'domain=localhost',
+        'max-age=86400',
+        'expires=Sun, 16 Jul 3567 06:23:41 GMT',
+        // 'Secure',
+        'SameSite=Lax',
+        'HttpOnly'
+    ];
+
     return callback(200, {
         status: 'success',
         msg: 'Sesija sukurta'
+    }, {
+        'Set-Cookie': cookies.join('; '),
     });
 }
 
