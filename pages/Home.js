@@ -4,8 +4,8 @@ import { servicesSection } from "../components/servicesSection.js";
 import { PageTemplate } from "../lib/Page.js";
 
 class PageHome extends PageTemplate {
-    constructor() {
-        super();
+    constructor(data) {
+        super(data);
         this.isHomePage = true;
     }
 

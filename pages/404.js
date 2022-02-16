@@ -1,6 +1,10 @@
 import { PageTemplate } from "../lib/Page.js";
 
 class Page404 extends PageTemplate {
+    constructor(data) {
+        super(data);
+    }
+
     mainHTML() {
         return `<section class="container hero">
                     <div class="row">

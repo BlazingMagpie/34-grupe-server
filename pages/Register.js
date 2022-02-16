@@ -1,8 +1,8 @@
 import { PageTemplate } from "../lib/Page.js";
 
 class PageRegister extends PageTemplate {
-    constructor() {
-        super();
+    constructor(data) {
+        super(data);
         this.pageCSSfileName = 'auth';
         this.pageJSfileName = 'auth';
     }

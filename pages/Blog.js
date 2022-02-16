@@ -1,8 +1,8 @@
 import { PageTemplate } from "../lib/Page.js";
 
 class PageBlog extends PageTemplate {
-    constructor() {
-        super();
+    constructor(data) {
+        super(data);
         this.pageCSSfileName = 'blog';
     }
 
