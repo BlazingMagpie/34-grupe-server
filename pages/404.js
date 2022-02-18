@@ -1,6 +1,11 @@
 import { PageTemplate } from "../lib/Page.js";
 
 class Page404 extends PageTemplate {
+    /**
+     * Sabloninio puslapio konstruktorius.
+     * @constructor
+     * @param {object} data Duomenu objektas
+     */
     constructor(data) {
         super(data);
     }
