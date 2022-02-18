@@ -49,7 +49,7 @@ handler._token.post = async (data, callback) => {
     if (!savedUserDataJSON) {
         return callback(400, {
             status: 'error',
-            msg: 'Invalid email and password match'
+            msg: 'Invalid email and password match 1'
         });
     }
 
@@ -62,10 +62,10 @@ handler._token.post = async (data, callback) => {
     }
 
     userObj.pass = utils.hash(userObj.pass);
-    if (userObj.pass !== savedUserData.pass) {
+    if (userObj.pass !== savedUserData.password) {
         return callback(400, {
             status: 'error',
-            msg: 'Invalid email and password match'
+            msg: 'Invalid email and password match 2'
         });
     }
 
@@ -97,7 +97,11 @@ handler._token.post = async (data, callback) => {
 
     return callback(200, {
         status: 'success',
-        msg: 'Sesija sukurta'
+        msg: 'Sesija sukurta',
+        action: {
+            name: 'redirect',
+            param: '/'
+        }
     }, {
         'Set-Cookie': cookies.join('; '),
     });

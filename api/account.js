@@ -79,7 +79,11 @@ handler._account.post = async (data, callback) => {
 
     return callback(200, {
         status: 'success',
-        msg: 'Paskyra sukurta'
+        msg: 'Paskyra sukurta',
+        action: {
+            name: 'redirect',
+            param: '/login'
+        }
     });
 }
 

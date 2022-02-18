@@ -62,6 +62,13 @@ submitDOM.addEventListener('click', (e) => {
                 try {
                     const obj = JSON.parse(this.responseText);
                     errorsDOM.innerText = obj.msg;
+
+                    if (obj.action) {
+                        const { name, param } = obj.action;
+                        if (name === 'redirect') {
+                            location.href = param;
+                        }
+                    }
                 } catch (error) {
                     errorsDOM.innerText = 'Is serverio atejo blogai suformatuota zinute';
                 }
