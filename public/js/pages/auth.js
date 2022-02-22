@@ -74,7 +74,7 @@ submitDOM.addEventListener('click', (e) => {
                 }
             }
         };
-        xhttp.open("POST", formDOM.action, true);
+        xhttp.open('POST', formDOM.action, true);
         xhttp.send(JSON.stringify(formData));
     }
 
