@@ -8,6 +8,8 @@ class PageLogout extends PageTemplate {
      */
     constructor(data) {
         super(data);
+        this.isLogoutPage = true;
+        this.data.user.isLoggedIn = false;
     }
 
     mainHTML() {
