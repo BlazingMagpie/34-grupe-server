@@ -21,6 +21,7 @@
     box-shadow: 0 4px 8px #0002;
     overflow: hidden;
     transition: all 0.3s;
+    word-break: break-word;
 }
 .blog-list > .list > .post:hover {
     box-shadow: 0 8px 20px #0004;
