@@ -1,8 +1,13 @@
 import { PageTemplate } from "../lib/Page.js";
 
 class PageRegister extends PageTemplate {
-    constructor() {
-        super();
+    /**
+     * Sabloninio puslapio konstruktorius.
+     * @constructor
+     * @param {object} data Duomenu objektas
+     */
+    constructor(data) {
+        super(data);
         this.pageCSSfileName = 'auth';
         this.pageJSfileName = 'auth';
     }
@@ -12,7 +17,7 @@ class PageRegister extends PageTemplate {
                     <div class="row">
                         <div class="left">
                             <h1>Register</h1>
-                            <form class="form">
+                            <form class="form" action="/api/account">
                                 <div class="form-errors"></div>
                                 <div class="form-row">
                                     <label for="username">Username</label>

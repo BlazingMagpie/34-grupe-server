@@ -1,8 +1,13 @@
 import { PageTemplate } from "../lib/Page.js";
 
 class PageBlog extends PageTemplate {
-    constructor() {
-        super();
+    /**
+     * Sabloninio puslapio konstruktorius.
+     * @constructor
+     * @param {object} data Duomenu objektas
+     */
+    constructor(data) {
+        super(data);
         this.pageCSSfileName = 'blog';
     }
 

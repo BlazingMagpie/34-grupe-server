@@ -10,8 +10,10 @@ submitDOM.addEventListener('click', (e) => {
     // formos validacija - pirmine reiksmiu patikra
     const errors = [];
     const passwordValues = [];
+    const formData = {}
     for (const inputDOM of allInputsDOM) {
-        const { value, dataset } = inputDOM;
+        const { id, value, dataset } = inputDOM;
+        formData[id] = value;
 
         const validationRule = dataset.validation;
         if (!validationRule) {
@@ -50,11 +52,30 @@ submitDOM.addEventListener('click', (e) => {
 
     // jei rado klaidu, jas atvaizduoja
     if (errors.length) {
-        console.log('ISSITAISYK KLAIDAS, PLEASE...');
         errorsDOM.innerText = errors.map(s => s + '.').join('\n');
     } else {
-        console.log('GOOD TO GO - galim siusti info...');
         errorsDOM.innerText = '';
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                try {
+                    const obj = JSON.parse(this.responseText);
+                    errorsDOM.innerText = obj.msg;
+
+                    if (obj.action) {
+                        const { name, param } = obj.action;
+                        if (name === 'redirect') {
+                            location.href = param;
+                        }
+                    }
+                } catch (error) {
+                    errorsDOM.innerText = 'Is serverio atejo blogai suformatuota zinute';
+                }
+            }
+        };
+        xhttp.open('POST', formDOM.action, true);
+        xhttp.send(JSON.stringify(formData));
     }
 
     // siusti duomenis

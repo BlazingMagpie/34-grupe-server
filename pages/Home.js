@@ -4,8 +4,13 @@ import { servicesSection } from "../components/servicesSection.js";
 import { PageTemplate } from "../lib/Page.js";
 
 class PageHome extends PageTemplate {
-    constructor() {
-        super();
+    /**
+     * Sabloninio puslapio konstruktorius.
+     * @constructor
+     * @param {object} data Duomenu objektas
+     */
+    constructor(data) {
+        super(data);
         this.isHomePage = true;
     }
 

@@ -13,7 +13,7 @@ app.init = () => {
     server.init();
 
     // reguliariu procesu paleidimas:
-    // - istrinti senus/nebreikalingus failus
+    // - istrinti senus/nebereikalingus failus
     // - atsinaujinti informacija per/is API (valiutu kursai)
 }
 

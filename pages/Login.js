@@ -1,8 +1,13 @@
 import { PageTemplate } from "../lib/Page.js";
 
 class PageLogin extends PageTemplate {
-    constructor() {
-        super();
+    /**
+     * Sabloninio puslapio konstruktorius.
+     * @constructor
+     * @param {object} data Duomenu objektas
+     */
+    constructor(data) {
+        super(data);
         this.pageCSSfileName = 'auth';
         this.pageJSfileName = 'auth';
     }
@@ -12,15 +17,15 @@ class PageLogin extends PageTemplate {
                     <div class="row">
                         <div class="left">
                             <h1>Login</h1>
-                            <form class="form">
+                            <form class="form" action="/api/token">
                                 <div class="form-errors"></div>
                                 <div class="form-row">
-                                    <label for="username">Username</label>
-                                    <input id="username" data-validation="username" type="text" placeholder="Type username" required>
+                                    <label for="email">Email</label>
+                                    <input id="email" data-validation="email" type="text" placeholder="Type email" value="chuck@norris.com" required>
                                 </div>
                                 <div class="form-row">
                                     <label for="pass">Password</label>
-                                    <input id="pass" data-validation="password" type="password" placeholder="Type password" required>
+                                    <input id="pass" data-validation="password" type="password" placeholder="Type password" value="chuckchuckchuck" required>
                                 </div>
                                 <div class="form-row">
                                     <button type="submit" class="btn">Log in</button>
