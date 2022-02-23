@@ -47,6 +47,36 @@ class IsValid {
         }
         return true;
     }
+
+    static title(text) {
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
+        if (text === '') {
+            return 'Pavadinimas negali buti tuscias';
+        }
+        return true;
+    }
+
+    static slug(text) {
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
+        if (text === '') {
+            return 'URL negali buti tuscias';
+        }
+        return true;
+    }
+
+    static content(text) {
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
+        if (text === '') {
+            return 'Turinys negali buti tuscias';
+        }
+        return true;
+    }
 }
 
 export { IsValid }
