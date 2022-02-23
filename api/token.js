@@ -1,6 +1,7 @@
 import { file } from "../lib/file.js";
 import { IsValid } from "../lib/IsValid.js";
 import { utils } from "../lib/utils.js";
+import config from '../config.js';
 
 const handler = {};
 
@@ -88,7 +89,7 @@ handler._token.post = async (data, callback) => {
         'login-token=' + token,
         'path=/',
         'domain=localhost',
-        'max-age=86400',
+        'max-age=' + config.cookiesMaxAge,
         'expires=Sun, 16 Jul 3567 06:23:41 GMT',
         // 'Secure',
         'SameSite=Lax',
