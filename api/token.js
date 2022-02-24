@@ -72,7 +72,8 @@ handler._token.post = async (data, callback) => {
 
     const userData = {
         email: userObj.email,
-        expire: Date.now() + 7 * 86400000
+        expire: Date.now() + 7 * 86400000,
+        browser: utils.detectedBrowser(data.headers['user-agent']),
     }
 
     const token = utils.randomString(20);
