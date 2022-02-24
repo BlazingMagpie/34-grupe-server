@@ -10,6 +10,7 @@
 }
 .blog-inner > footer {
     font-style: italic;
+    background-color: initial;
 }
 .blog-inner > footer::before {
     content: '- ';
