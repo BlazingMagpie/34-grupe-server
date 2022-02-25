@@ -15,19 +15,13 @@ class PageBlogPost extends PageTemplate {
     }
 
     async getBlogPostData() {
+        const postSlug = this.data.trimmedPath.split('/')[1].trim();
         try {
-            const content = [];
-            const fileNames = await folder.read('/data/blog-posts');
-            for (const fileName of fileNames) {
-                const fileContent = await file.read('/data/blog-posts', fileName);
-                const contentObj = utils.parseJSONtoObject(fileContent);
-                if (contentObj) {
-                    content.push(contentObj);
-                }
-            }
-            return content;
+            const fileContent = await file.read('/data/blog-posts', postSlug + '.json');
+            const contentObj = utils.parseJSONtoObject(fileContent);
+            return contentObj;
         } catch (error) {
-            return [];
+            return false;
         }
     }
 
@@ -38,15 +32,20 @@ class PageBlogPost extends PageTemplate {
                 </section>`;
     }
 
-    correctPostHTML() {
+    correctPostHTML(post) {
         return `<section class="container blog-inner">
-                    <h1 class="row title">Blog post title</h1>
-                    <p class="row">Post content...</p>
+                    <h1 class="row title">${post.title}</h1>
+                    <p class="row">${post.content}</p>
                     <footer class="row">Author</footer>
                 </section>`;
     }
 
     isValidPost(post) {
+        if (typeof post !== 'object'
+            || Array.isArray(post)
+            || post === null) {
+            return false;
+        }
         return true;
     }
 

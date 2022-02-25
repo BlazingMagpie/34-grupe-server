@@ -40,11 +40,17 @@ class PageBlog extends PageTemplate {
     }
 
     blogPostHTML(post) {
+        const maxPostDescriptionLength = 75;
+        let text = post.content;
+        if (text.length > maxPostDescriptionLength) {
+            text = text.slice(0, maxPostDescriptionLength) + '...';
+        }
+
         return `<article class="post">
                     <img src="/img/blog.jpg" alt="Blog image" class="post-img">
                     <h2 class="post-title">${post.title}</h2>
-                    <p class="post-description">${post.content}</p>
-                    <a href="./${post.slug}/" class="read-more">Read more<i class="icon fa fa-angle-right"></i></a>
+                    <p class="post-description">${text}</p>
+                    <a href="/blog/${post.slug}/" class="read-more">Read more<i class="icon fa fa-angle-right"></i></a>
                 </article>`;
     }
 
