@@ -2,6 +2,8 @@ import { file } from "../lib/file.js";
 import { IsValid } from "../lib/IsValid.js";
 import { utils } from "../lib/utils.js";
 import config from '../config.js';
+import { database } from "../lib/database.js";
+import { promisify } from "util";
 
 const handler = {};
 
@@ -20,7 +22,7 @@ handler.token = async (data, callback) => {
 
 handler._token = {};
 
-handler._token.post = async (data, callback) => {
+handler._token.post = async (data, callback) => { //Login
     const userObj = data.payload;
 
     if (!userObj) {
@@ -46,27 +48,22 @@ handler._token.post = async (data, callback) => {
         });
     }
 
-    const savedUserDataJSON = await file.read('/data/users', userObj.email + '.json');
-    if (!savedUserDataJSON) {
+    const execute = promisify(database.execute);
+    const res = await execute('select id, username, email from users WHERE email = ? AND password = ?;', 
+                              [userObj.email, utils.hash(userObj.pass)]);
+
+    if (res.length != 1) {
         return callback(400, {
             status: 'error',
             msg: 'Invalid email and password match 1'
         });
     }
 
-    const savedUserData = utils.parseJSONtoObject(savedUserDataJSON);
+    const savedUserData = res[0];
     if (!savedUserData) {
         return callback(500, {
             status: 'error',
             msg: 'Internat server error while trying to get user information'
-        });
-    }
-
-    userObj.pass = utils.hash(userObj.pass);
-    if (userObj.pass !== savedUserData.password) {
-        return callback(400, {
-            status: 'error',
-            msg: 'Invalid email and password match 2'
         });
     }
 
@@ -76,12 +73,13 @@ handler._token.post = async (data, callback) => {
     }
 
     const token = utils.randomString(20);
-
-    const creationStatus = await file.create('/data/tokens', token + '.json', userData);
-    if (creationStatus !== true) {
+    try{
+        await execute('INSERT tokens(token, userId, expiresAt) VALUES(?,?,?)', [token, savedUserData.id, userData.expire]);
+    }
+    catch (error) {
         return callback(500, {
             status: 'error',
-            msg: creationStatus
+            msg: error.msg
         });
     }
 
