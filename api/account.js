@@ -1,6 +1,8 @@
 import { file } from "../lib/file.js";
 import { IsValid } from "../lib/IsValid.js";
 import { utils } from "../lib/utils.js";
+import { database } from "../lib/database.js";
+import { promisify } from "util";
 
 const handler = {};
 
@@ -19,7 +21,7 @@ handler.account = async (data, callback) => {
 
 handler._account = {};
 
-handler._account.post = async (data, callback) => {
+handler._account.post = async (data, callback) => { // Registracija
     const userObj = data.payload;
 
     if (!userObj) {
@@ -55,7 +57,8 @@ handler._account.post = async (data, callback) => {
 
     userObj.pass = utils.hash(userObj.pass);
 
-    const alreadyRegistered = false;
+    const alreadyRegistered = false;//TODO
+
     if (alreadyRegistered) {
         return callback(400, {
             status: 'error',
@@ -69,11 +72,14 @@ handler._account.post = async (data, callback) => {
         password: userObj.pass,
     }
 
-    const creationStatus = await file.create('/data/users', userObj.email + '.json', userData);
-    if (creationStatus !== true) {
+    const execute = promisify(database.execute);
+    try{
+        await execute('INSERT users(username, email, password) values (?, ?, ?);',
+                        [userData.username, userData.email, userData.password]);
+    } catch(err) {
         return callback(500, {
             status: 'error',
-            msg: creationStatus
+            msg: err
         });
     }
 

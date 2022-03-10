@@ -1,6 +1,8 @@
 import { server } from './lib/server.js';
+import { database } from './lib/database.js';
 
 const app = {};
+
 
 app.init = () => {
     // pasiruosti pradinius folder'ius:
@@ -8,7 +10,7 @@ app.init = () => {
     // pasiruosti pradinius failus
 
     // prisijungimas prie DB (duomenu baze)
-
+    database.init();
     // uzkurti pati serveri (musu programa)
     server.init();
 
