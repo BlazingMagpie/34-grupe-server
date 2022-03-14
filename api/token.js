@@ -3,7 +3,6 @@ import { IsValid } from "../lib/IsValid.js";
 import { utils } from "../lib/utils.js";
 import config from '../config.js';
 import { database } from "../lib/database.js";
-import { promisify } from "util";
 
 const handler = {};
 
@@ -48,8 +47,7 @@ handler._token.post = async (data, callback) => { //Login
         });
     }
 
-    const execute = promisify(database.execute);
-    const res = await execute('select id, username, email from users WHERE email = ? AND password = ?;', 
+    const res = await database.execute('select id, username, email from users WHERE email = ? AND password = ?;', 
                               [userObj.email, utils.hash(userObj.pass)]);
 
     if (res.length != 1) {
@@ -74,7 +72,7 @@ handler._token.post = async (data, callback) => { //Login
 
     const token = utils.randomString(20);
     try{
-        await execute('INSERT tokens(token, userId, expiresAt) VALUES(?,?,?)', [token, savedUserData.id, userData.expire]);
+        await database.execute('INSERT tokens(token, userId, expiresAt) VALUES(?,?,?)', [token, savedUserData.id, userData.expire]);
     }
     catch (error) {
         return callback(500, {

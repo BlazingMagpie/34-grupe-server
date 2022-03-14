@@ -72,11 +72,16 @@ handler._account.post = async (data, callback) => { // Registracija
         password: userObj.pass,
     }
 
-    const execute = promisify(database.execute);
     try{
-        await execute('INSERT users(username, email, password) values (?, ?, ?);',
-                        [userData.username, userData.email, userData.password]);
+        // database.run(
+        //         'INSERT users(username, email, password) values (?, ?, ?);',
+        //         [userData.username, userData.email, userData.password]);
+        database.run(
+            'INSERT INTO users(username, email, password) values (?, ?, ?);',
+            [userData.username, userData.email, userData.password]);
+
     } catch(err) {
+        console.log(err);
         return callback(500, {
             status: 'error',
             msg: err
