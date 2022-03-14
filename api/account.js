@@ -73,10 +73,7 @@ handler._account.post = async (data, callback) => { // Registracija
     }
 
     try{
-        // database.run(
-        //         'INSERT users(username, email, password) values (?, ?, ?);',
-        //         [userData.username, userData.email, userData.password]);
-        database.run(
+        await database.run(
             'INSERT INTO users(username, email, password) values (?, ?, ?);',
             [userData.username, userData.email, userData.password]);
 

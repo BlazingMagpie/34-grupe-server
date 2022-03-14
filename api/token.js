@@ -46,10 +46,8 @@ handler._token.post = async (data, callback) => { //Login
             msg: passwordMsg
         });
     }
-
-    const res = await database.execute('select id, username, email from users WHERE email = ? AND password = ?;', 
+    const res = await database.select('select id, username, email from users WHERE email = ? AND password = ?;', 
                               [userObj.email, utils.hash(userObj.pass)]);
-
     if (res.length != 1) {
         return callback(400, {
             status: 'error',
@@ -72,7 +70,7 @@ handler._token.post = async (data, callback) => { //Login
 
     const token = utils.randomString(20);
     try{
-        await database.execute('INSERT tokens(token, userId, expiresAt) VALUES(?,?,?)', [token, savedUserData.id, userData.expire]);
+        await database.run('INSERT INTO tokens(token, userId, expiresAt) VALUES(?,?,?)', [token, savedUserData.id, userData.expire]);
     }
     catch (error) {
         return callback(500, {
