@@ -10,7 +10,7 @@ app.init = () => {
     // pasiruosti pradinius failus
 
     // prisijungimas prie DB (duomenu baze)
-    database.init();
+    database.init().catch(err => console.error(err));
     // uzkurti pati serveri (musu programa)
     server.init();
 

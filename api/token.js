@@ -46,44 +46,24 @@ handler._token.post = async (data, callback) => { //Login
             msg: passwordMsg
         });
     }
-    const res = await database.select('select id, username, email from users WHERE email = ? AND password = ?;', 
-                              [userObj.email, utils.hash(userObj.pass)]);
-    if (res.length != 1) {
-        return callback(400, {
-            status: 'error',
-            msg: 'Invalid email and password match 1'
-        });
-    }
-
-    const savedUserData = res[0];
-    if (!savedUserData) {
-        return callback(500, {
-            status: 'error',
-            msg: 'Internat server error while trying to get user information'
-        });
-    }
-
-    const userData = {
-        email: userObj.email,
-        expire: Date.now() + 7 * 86400000
-    }
-
-    const token = utils.randomString(20);
-
-    const tokenData = {
-        token: token,
-        userId: savedUserData.id
-    }
-
+    
+    let token;
     try{
-        await database.redis.set(`tokens:${token}`, JSON.stringify(tokenData), {EX: 120});
+        token = await database.users.login(userObj.email, userObj.pass);
     }
     catch (error) {
-        console.log(error);
-        return callback(500, {
-            status: 'error',
-            msg: error.msg
-        });
+        switch(error){
+            case 400: 
+                return callback(400, {
+                    status: 'error',
+                    msg: 'Invalid email and password match'
+                });
+            default:
+                return callback(500, {
+                    status: 'error',
+                    msg: 'Internal server error while trying to get user informatio'
+                });
+        }
     }
 
     const cookies = [

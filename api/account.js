@@ -55,8 +55,6 @@ handler._account.post = async (data, callback) => { // Registracija
         });
     }
 
-    userObj.pass = utils.hash(userObj.pass);
-
     const alreadyRegistered = false;//TODO
 
     if (alreadyRegistered) {
@@ -66,17 +64,8 @@ handler._account.post = async (data, callback) => { // Registracija
         });
     }
 
-    const userData = {
-        username: userObj.username,
-        email: userObj.email,
-        password: userObj.pass,
-    }
-
     try{
-        await database.run(
-            'INSERT INTO users(username, email, password) values (?, ?, ?);',
-            [userData.username, userData.email, userData.password]);
-
+        await database.users.register(userObj.username, userObj.email, userObj.pass);
     } catch(err) {
         console.log(err);
         return callback(500, {
