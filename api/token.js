@@ -69,10 +69,17 @@ handler._token.post = async (data, callback) => { //Login
     }
 
     const token = utils.randomString(20);
+
+    const tokenData = {
+        token: token,
+        userId: savedUserData.id
+    }
+
     try{
-        await database.run('INSERT INTO tokens(token, userId, expiresAt) VALUES(?,?,?)', [token, savedUserData.id, userData.expire]);
+        await database.redis.set(`tokens:${token}`, JSON.stringify(tokenData), {EX: 120});
     }
     catch (error) {
+        console.log(error);
         return callback(500, {
             status: 'error',
             msg: error.msg
